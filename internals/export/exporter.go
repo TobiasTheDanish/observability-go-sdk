@@ -10,6 +10,7 @@ import (
 )
 
 type ExportJob struct {
+	DataId  string
 	Method  string
 	Url     string
 	Headers http.Header
@@ -20,6 +21,7 @@ type ExportResult struct {
 	StatusCode int
 	Headers    http.Header
 	Body       []byte
+	DataID     string
 }
 
 type Exporter struct {
@@ -64,6 +66,7 @@ func (e *Exporter) run(ctx context.Context) {
 }
 
 func handleJob(job ExportJob, ctx context.Context) (res ExportResult, ok bool) {
+	res.DataID = job.DataId
 	var jsonData []byte
 	var err error
 
@@ -100,10 +103,9 @@ func handleJob(job ExportJob, ctx context.Context) (res ExportResult, ok bool) {
 	}
 
 	ok = true
-	res = ExportResult{
-		StatusCode: response.StatusCode,
-		Headers:    response.Header,
-		Body:       body,
-	}
+	res.StatusCode = response.StatusCode
+	res.Headers = response.Header
+	res.Body = body
+
 	return
 }

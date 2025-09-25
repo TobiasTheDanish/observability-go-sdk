@@ -43,6 +43,7 @@ func RunExportTest() {
 func RunSdk() {
 	sdk := InitSdk(Config{
 		ExportInterval: 2 * time.Second,
+		ExportBaseUrl:  "http://localhost:8080",
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())

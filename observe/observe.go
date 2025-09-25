@@ -19,9 +19,14 @@ type sdk struct {
 
 type Config struct {
 	/*
-	*	Time between exports. Defaults to 30 seconds.
-	 */
+		Time between exports. Defaults to 30 seconds.
+	*/
 	ExportInterval time.Duration
+	/*
+	 Base url of your observability server. Including protcol like "https://...".
+	 Defaults to "http://localhost:8080"
+	*/
+	ExportBaseUrl string
 }
 
 func InitSdk(config Config) Sdk {
@@ -29,6 +34,7 @@ func InitSdk(config Config) Sdk {
 
 	ex := &export.Manager{
 		Interval:  config.ExportInterval,
+		BaseUrl:   config.ExportBaseUrl,
 		DataStore: &store.DummyStore{},
 	}
 
@@ -40,6 +46,9 @@ func InitSdk(config Config) Sdk {
 func setDefaultConfig(config Config) Config {
 	if config.ExportInterval == 0 {
 		config.ExportInterval = 30 * time.Second
+	}
+	if config.ExportBaseUrl == "" {
+		config.ExportBaseUrl = "http://localhost:8080"
 	}
 
 	return config
