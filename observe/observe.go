@@ -35,7 +35,7 @@ func InitSdk(config Config) Sdk {
 	ex := &export.Manager{
 		Interval:  config.ExportInterval,
 		BaseUrl:   config.ExportBaseUrl,
-		DataStore: &store.DummyStore{},
+		DataStore: &store.Memory{},
 	}
 
 	return &sdk{

@@ -12,7 +12,7 @@ import (
 type Manager struct {
 	Interval  time.Duration
 	BaseUrl   string
-	DataStore store.DataStore[store.Data]
+	DataStore store.Store
 
 	exporter *Exporter
 	jobChan  chan ExportJob
